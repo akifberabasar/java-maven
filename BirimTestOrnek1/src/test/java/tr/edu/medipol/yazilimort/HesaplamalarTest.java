@@ -20,6 +20,7 @@ public class HesaplamalarTest {
 		
 	}
 	*/
+	
 	@Test
 	public void testToplama() {
 		int sonuc = Hesaplamalar.topla(2, 3);
