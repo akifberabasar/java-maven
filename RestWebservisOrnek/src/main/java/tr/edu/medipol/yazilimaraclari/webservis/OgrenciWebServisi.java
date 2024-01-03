@@ -20,5 +20,4 @@ public class OgrenciWebServisi {
 	public List<Ogrenci> listele(){
 		return OGRENCİ_LISTESI;
 	}
-
 }
