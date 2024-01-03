@@ -11,13 +11,29 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    permissions:
+      pull-requests: 'write'
+
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 8 Coretto
+    - name: Set up JDK 8 Corretto
       uses: actions/setup-java@v3
       with:
         java-version: '8'
         distribution: 'corretto'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file BirimTestOrnek1/pom.xml
+      run: mvn -B install --file BirimTestOrnek1/pom.xml
+    - name: Coverage
+      id: jacoco
+      uses: madrapps/jacoco-report@v1.3
+      with:
+        paths: ${{ github.workspace }}/BirimTestOrnek1/target/site/jacoco/jacoco.xml
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Fail PR if overall coverage is less than %60
+      if: ${{ steps.jacoco.outputs.coverage-overall < 60.0 }}
+      uses: actions/github-script@v6
+      with: 
+       script: |
+         core.setFailed('Overall coverage is less than 60%!')
+       
