@@ -31,5 +31,4 @@ public class Hesaplamalar {
 		int sonuc2 = sayi1 * sayi2;
 		return sonuc2;
 	}
-	
 }
